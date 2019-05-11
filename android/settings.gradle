@@ -1,0 +1,3 @@
+rootProject.name = 'cryptomate'
+
+include ':app'
