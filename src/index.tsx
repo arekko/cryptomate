@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
-
+import Navigation from "./navigation";
 export const App: React.FC<{}> = () => {
-  return <View />;
+  return <Navigation />;
 };

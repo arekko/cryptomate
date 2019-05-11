@@ -1,12 +1,17 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-
-
-
+import React from "react";
+import { Text, View } from "react-native";
 
 export const Market: React.FC<{}> = () => {
-
-  return <View>
-    <Text>Market</Text>
-  </View>
-}
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "red"
+      }}
+    >
+      <Text>Market</Text>
+    </View>
+  );
+};
