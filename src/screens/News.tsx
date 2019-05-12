@@ -2,9 +2,9 @@ import React from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { HeadlightNewsCard } from "../components/HeadlightNewsCard";
+import { NewsList } from "../components/NewsList";
 import { theme } from "../constants";
 import { btcNews } from "../constants/mock";
-import { NewsList } from "../components/NewsList";
 
 interface INewsProps {}
 
@@ -34,9 +34,9 @@ export const News: React.FC<INewsProps> = () => {
 
   const renderNews = () => {
     return (
-      <View>
-        <Text>Crypto News</Text>
-        <NewsList data={btcNews as any}/>
+      <View style={styles.newsContainer}>
+        <Text style={styles.newsLabel}>Crypto News</Text>
+        <NewsList data={btcNews as any} />
       </View>
     );
   };
@@ -54,5 +54,14 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.gray,
     flex: 1
+  },
+  newsLabel: {
+    fontSize: theme.sizes.header,
+    color: theme.colors.textGray,
+    marginBottom: 20
+  },
+  newsContainer: {
+    marginTop: 15,
+    padding: 15
   }
 });

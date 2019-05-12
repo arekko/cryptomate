@@ -2,7 +2,10 @@ const colors = {
   accent: "#FEB044",
   gray: "#F4F6F8",
   iconGray: "#B2BDCB",
+  titleGray: "#454F63",
+  textGray: "#78849E",
 
+  
   primary: "#0AC4BA",
   secondary: "#2BDA8E",
   tertiary: "#FFE358",
@@ -28,4 +31,4 @@ const sizes = {
   caption: 12
 };
 
-export {colors , sizes}
+export { colors, sizes };
