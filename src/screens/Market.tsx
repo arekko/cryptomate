@@ -7,8 +7,7 @@ export const Market: React.FC<{}> = () => {
       style={{
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "red"
+        alignItems: "center"
       }}
     >
       <Text>Market</Text>
