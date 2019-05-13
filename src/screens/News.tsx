@@ -1,54 +1,68 @@
-import React from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { HeadlightNewsCard } from "../components/HeadlightNewsCard";
+import React, { useEffect } from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { fetchNews } from "../actions";
 import { NewsList } from "../components/NewsList";
+import { Spinner } from "../components/Spinner";
 import { theme } from "../constants";
-import { btcNews } from "../constants/mock";
+import { withNewsService } from "../hocs";
+import { NewsApiService } from "../services";
+interface INewsProps {
+  newsApiService: NewsApiService;
+  news: any;
+  newsLoaded: any;
+  newsRequested: any;
+  loading: boolean;
+  fetchNews: any;
+}
 
-interface INewsProps {}
+const N: React.FC<INewsProps> = ({ news, loading, fetchNews }) => {
+  useEffect(() => {
+    fetchNews();
+  }, []);
 
-interface INewsStates {}
+  console.log(news);
 
-export const News: React.FC<INewsProps> = () => {
-  const renderHeadlineNews = () => {
-    return (
-      <View>
-        <FlatList
-          horizontal
-          pagingEnabled
-          scrollEnabled
-          showsHorizontalScrollIndicator={false}
-          snapToAlignment="center"
-          data={btcNews}
-          keyExtractor={(item, index) => `${index}`}
-          renderItem={({ item }) => (
-            <TouchableWithoutFeedback>
-              <HeadlightNewsCard title={item.title as string} url={item.url} />
-            </TouchableWithoutFeedback>
-          )}
-        />
-      </View>
-    );
-  };
+  const data = news.filter((item: any) => item.urlToImage);
+
+
 
   const renderNews = () => {
     return (
       <View style={styles.newsContainer}>
-        <Text style={styles.newsLabel}>Crypto News</Text>
-        <NewsList data={btcNews as any} />
+        <NewsList data={data as any} />
       </View>
     );
   };
 
-  return (
+  return loading ? (
+    <Spinner size={70} color={theme.colors.accent} />
+  ) : (
     <View style={styles.container}>
       <SafeAreaView />
-      {renderHeadlineNews()}
       {renderNews()}
     </View>
   );
 };
+
+const mapStateToProps = ({ news, loading }: any) => {
+  return { news, loading };
+};
+
+const mapDispatchToProps = (dispatch: any, { newsApiService }: any) => {
+  return {
+    fetchNews: fetchNews(newsApiService, dispatch)
+  };
+};
+
+export const News = compose(
+  withNewsService(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(N);
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   newsContainer: {
-    marginTop: 15,
+    marginTop: 5,
     padding: 15
   }
 });

@@ -10,16 +10,14 @@ interface ICardProps {
 
 export const HeadlightNewsCard: React.FC<ICardProps> = ({ url, title }) => (
   <View style={styles.card}>
-    <View style={styles.imgWrapper}>
-      <Image source={{ uri: url }} style={styles.img} />
-      <Text style={styles.title}>{title}</Text>
-    </View>
+    <Image source={{ uri: url }} style={styles.img} />
+    <Text style={styles.title}>{title}</Text>
   </View>
 );
 
 const styles = StyleSheet.create({
   card: {
-    width: screenWidth,
+    flex: 1,
     alignItems: "center",
     position: "relative",
     height: 180
@@ -27,10 +25,7 @@ const styles = StyleSheet.create({
   img: {
     borderRadius: 15,
     height: 180,
-    width: screenWidth * 0.85
-  },
-  imgWrapper: {
-    width: screenWidth * 0.85
+    width: screenWidth - 30
   },
 
   title: {

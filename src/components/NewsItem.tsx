@@ -16,7 +16,7 @@ export const NewsItem: React.FC<INewsItemProps> = ({ title, url, text }) => {
       <View style={styles.innerContainer}>
         <Image source={{ uri: url }} style={styles.itemImg} />
         <View style={styles.textWrapper}>
-          <Text numberOfLines={2} ellipsizeMode="tail" style={styles.title}>
+          <Text numberOfLines={3} ellipsizeMode="tail" style={styles.title}>
             {title}
           </Text>
           <Text numberOfLines={2} ellipsizeMode="tail" style={styles.text}>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     // backgroundColor: theme.colors.gray2,
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    marginBottom: 20
+    marginBottom: 10
   },
   innerContainer: {
     backgroundColor: theme.colors.white,
@@ -54,15 +54,15 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     color: theme.colors.titleGray,
     fontSize: theme.sizes.header,
-    marginBottom: 15
+    marginBottom: 8
   },
   text: {
     color: theme.colors.textGray,
     fontSize: theme.sizes.body
   },
   itemImg: {
-    width: 110,
-    height: 110,
+    width: 115,
+    height: 115,
     borderRadius: 15,
     marginLeft: -30
   }
