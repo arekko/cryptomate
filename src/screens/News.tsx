@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { compose } from "redux";
+import { bindActionCreators, compose } from "redux";
 import { fetchNews } from "../actions";
 import { NewsList } from "../components/NewsList";
 import { Spinner } from "../components/Spinner";
@@ -26,8 +26,6 @@ const N: React.FC<INewsProps> = ({ news, loading, fetchNews }) => {
 
   const data = news.filter((item: any) => item.urlToImage);
 
-
-
   const renderNews = () => {
     return (
       <View style={styles.newsContainer}>
@@ -50,11 +48,14 @@ const mapStateToProps = ({ news, loading }: any) => {
   return { news, loading };
 };
 
-const mapDispatchToProps = (dispatch: any, { newsApiService }: any) => {
-  return {
-    fetchNews: fetchNews(newsApiService, dispatch)
-  };
-};
+// const mapDispatchToProps = (dispatch: any, { newsApiService }: any) => {
+//   return {
+//     fetchNews: fetchNews(newsApiService, dispatch)
+//   };
+// };
+
+const mapDispatchToProps = (dispatch: any, { newsApiService }: any) =>
+  bindActionCreators({ fetchNews: fetchNews(newsApiService) }, dispatch);
 
 export const News = compose(
   withNewsService(),
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
   },
   newsContainer: {
     marginTop: 5,
-    padding: 15
+    padding: 15,
+    paddingBottom: 0
   }
 });

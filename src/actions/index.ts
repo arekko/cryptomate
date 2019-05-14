@@ -17,7 +17,14 @@ export const newsError = (error: any) => ({
   payload: error
 });
 
-const fetchNews = (newsApiService: NewsApiService, dispatch: any) => () => {
+const fetchNewsOld = (newsApiService: NewsApiService, dispatch: any) => () => {
+  dispatch(newsRequested());
+  newsApiService
+    .getNews()
+    .then((data: any) => dispatch(newsLoaded(data.data.articles)));
+};
+
+const fetchNews = (newsApiService: NewsApiService) => () => (dispatch: any) => {
   dispatch(newsRequested());
   newsApiService
     .getNews()

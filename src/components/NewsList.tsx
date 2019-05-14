@@ -13,16 +13,19 @@ interface INewsListProps {
 }
 
 export const NewsList: React.FC<INewsListProps> = ({ data }) => {
+  const headerData = data.slice(0, 3);
+  const bodyData = data.slice(3);
+
   const renderHeadlineNews = () => {
     return (
-      <View>
+      <View style={{ marginBottom: 15 }}>
         <FlatList
           horizontal
           pagingEnabled
           scrollEnabled
           showsHorizontalScrollIndicator={false}
           snapToAlignment="center"
-          data={data}
+          data={headerData}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => (
             <TouchableWithoutFeedback>
@@ -40,7 +43,7 @@ export const NewsList: React.FC<INewsListProps> = ({ data }) => {
     <View>
       <FlatList
         ListHeaderComponent={renderHeadlineNews()}
-        data={data}
+        data={bodyData}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => `${index}`}
         renderItem={({ item }) => (
