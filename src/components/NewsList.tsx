@@ -1,20 +1,28 @@
-import React from "react";
-import { View } from "react-native";
-import {
-  FlatList,
-  TouchableOpacity,
-  TouchableWithoutFeedback
-} from "react-native-gesture-handler";
+import React, { useState } from "react";
+import { TouchableOpacity, View } from "react-native";
+import { FlatList } from "react-navigation";
+import { useNavigation } from "react-navigation-hooks";
 import { HeadlightNewsCard } from "./HeadlightNewsCard";
 import { NewsItem } from "./NewsItem";
 
 interface INewsListProps {
   data: [any];
+  refreshing: boolean;
+  onRefresh: () => void;
 }
 
-export const NewsList: React.FC<INewsListProps> = ({ data }) => {
+export const NewsList: React.FC<INewsListProps> = ({ data, refreshing, onRefresh }) => {
+
+  const { navigate } = useNavigation();
   const headerData = data.slice(0, 3);
   const bodyData = data.slice(3);
+
+
+  const onPress = (item: any) => {
+    navigate("NewsDetail", {
+      item: item
+    });
+  };
 
   const renderHeadlineNews = () => {
     return (
@@ -28,12 +36,12 @@ export const NewsList: React.FC<INewsListProps> = ({ data }) => {
           data={headerData}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => (
-            <TouchableWithoutFeedback>
+            <TouchableOpacity onPress={() => onPress(item)}>
               <HeadlightNewsCard
                 title={item.title as string}
                 url={item.urlToImage}
               />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           )}
         />
       </View>
@@ -47,7 +55,7 @@ export const NewsList: React.FC<INewsListProps> = ({ data }) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => `${index}`}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => onPress(item)}>
             <NewsItem
               title={item.title as string}
               url={item.urlToImage}
@@ -55,7 +63,11 @@ export const NewsList: React.FC<INewsListProps> = ({ data }) => {
             />
           </TouchableOpacity>
         )}
+        refreshing={refreshing}
+        onRefresh={() => onRefresh()}
       />
     </View>
   );
 };
+
+// export const NewsList = withNavigation(NL);

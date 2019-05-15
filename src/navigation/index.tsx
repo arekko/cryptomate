@@ -1,11 +1,40 @@
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { createAppContainer, createBottomTabNavigator } from "react-navigation";
+import {
+  createAppContainer,
+  createBottomTabNavigator,
+  createStackNavigator
+} from "react-navigation";
 import { theme } from "../constants";
 import { History } from "../screens/History";
 import { News } from "../screens/News";
+import NewsDetail from "../screens/NewsDetail";
 import { Wallet } from "../screens/Wallet";
 import { Market } from "./../screens/Market";
+
+const newsStack = createStackNavigator(
+  {
+    News: {
+      screen: News,
+      navigationOptions: {
+        header: null // hide header
+      }
+    },
+    NewsDetail: NewsDetail
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        height: theme.sizes.base * 4,
+        backgroundColor: theme.colors.accent, // or 'white
+        borderBottomColor: "transparent",
+        elevation: 0 // for android,
+      },
+      headerBackTitle: null,
+      headerTintColor: theme.colors.white // back arrow color
+    }
+  }
+);
 
 const tabsBar = createBottomTabNavigator(
   {
@@ -19,7 +48,7 @@ const tabsBar = createBottomTabNavigator(
       }
     },
     News: {
-      screen: News,
+      screen: newsStack,
       navigationOptions: {
         tabBarLabel: "News",
         tabBarIcon: ({ tintColor }: any) => (

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators, compose } from "redux";
 import { fetchNews } from "../actions";
@@ -18,18 +18,28 @@ interface INewsProps {
 }
 
 const N: React.FC<INewsProps> = ({ news, loading, fetchNews }) => {
+  const [refreshing, setRefreshing] = useState(false);
+
   useEffect(() => {
     fetchNews();
   }, []);
 
-  console.log(news);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchNews();
+    setRefreshing(false);
+  };
 
   const data = news.filter((item: any) => item.urlToImage);
 
   const renderNews = () => {
     return (
       <View style={styles.newsContainer}>
-        <NewsList data={data as any} />
+        <NewsList
+          data={data as any}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
       </View>
     );
   };
@@ -37,22 +47,14 @@ const N: React.FC<INewsProps> = ({ news, loading, fetchNews }) => {
   return loading ? (
     <Spinner size={70} color={theme.colors.accent} />
   ) : (
-    <View style={styles.container}>
-      <SafeAreaView />
-      {renderNews()}
-    </View>
+    <View style={styles.container}>{renderNews()}</View>
   );
 };
 
-const mapStateToProps = ({ news, loading }: any) => {
-  return { news, loading };
-};
-
-// const mapDispatchToProps = (dispatch: any, { newsApiService }: any) => {
-//   return {
-//     fetchNews: fetchNews(newsApiService, dispatch)
-//   };
-// };
+const mapStateToProps = ({news}: any) => ({
+  news: news.news,
+  loading: news.loading
+});
 
 const mapDispatchToProps = (dispatch: any, { newsApiService }: any) =>
   bindActionCreators({ fetchNews: fetchNews(newsApiService) }, dispatch);
