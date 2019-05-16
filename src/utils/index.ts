@@ -1,3 +1,4 @@
 import compose from "./compose";
+import { randomColor } from "./randomColor";
 
-export { compose };
+export { compose, randomColor };

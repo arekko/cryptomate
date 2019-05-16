@@ -4,6 +4,11 @@ import {
   FETCH_CRYPTO_SUCCESS
 } from "./../constants/actionTypes";
 
+const updateObject = (oldValue: object, newValue: object) => ({
+  ...oldValue,
+  ...newValue
+});
+
 const initialState = {
   crypto: [],
   loading: false,
@@ -15,23 +20,21 @@ export default (state = initialState, action: any) => {
 
   switch (type) {
     case FETCH_CRYPTO_SUCCESS:
-      return {
+      return updateObject(state, {
         crypto: payload,
         loading: false,
         error: null
-      };
+      });
     case FETCH_CRYPTO_REQUEST:
-      return {
-        ...state,
+      return updateObject(state, {
         loading: true,
         error: null
-      };
+      });
     case FETCH_CRYPTO_FAILURE:
-      return {
-        ...state,
+      return updateObject(state, {
         loading: false,
         error: payload
-      };
+      });
 
     default:
       return state;

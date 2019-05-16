@@ -12,18 +12,21 @@ export const cryptoLoaded = (data: any) => ({
   payload: data
 });
 
-export const newsError = (error: any) => ({
+export const cryptoFailed = (error: any) => ({
   type: FETCH_CRYPTO_FAILURE,
   payload: error
 });
 
-const fetchCryptoData = (cryptoService: CryptoApiService) => () => (
+const fetchCryptoData = (cryptoService: CryptoApiService) => () => async (
   dispatch: any
 ) => {
   dispatch(cryptoRequested());
-  cryptoService
-    .getData()
-    .then((data: any) => dispatch(cryptoLoaded(data.data.Data)));
+  try {
+    const data = await cryptoService.getData();
+    dispatch(cryptoLoaded(data.data.Data));
+  } catch (err) {
+    dispatch(cryptoFailed(err));
+  }
 };
 
 export { fetchCryptoData };

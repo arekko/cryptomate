@@ -45,7 +45,7 @@ const N: React.FC<INewsProps> = ({ news, loading, fetchNews }) => {
   };
 
   return loading ? (
-    <Spinner size={70} color={theme.colors.accent} />
+    <Spinner size={30} color={theme.colors.accent} />
   ) : (
     <View style={styles.container}>{renderNews()}</View>
   );
