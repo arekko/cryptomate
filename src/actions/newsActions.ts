@@ -1,18 +1,21 @@
-import { NewsApiService } from "../services";
 import {
   FETCH_NEWS_FAILURE,
   FETCH_NEWS_REQUEST,
-  FETCH_NEWS_SUCCESS
-} from "./../constants/actionTypes";
+  FETCH_NEWS_SUCCESS,
+  NewsActionTypes
+} from "../constants/reduxTypes";
+import { NewsApiService } from "../services";
 
-export const newsRequested = () => ({ type: FETCH_NEWS_REQUEST });
+export const newsRequested = (): NewsActionTypes => ({
+  type: FETCH_NEWS_REQUEST
+});
 
-export const newsLoaded = (news: any) => ({
+export const newsLoaded = (news: any): NewsActionTypes => ({
   type: FETCH_NEWS_SUCCESS,
   payload: news
 });
 
-export const newsError = (error: any) => ({
+export const newsError = (error: any): NewsActionTypes => ({
   type: FETCH_NEWS_FAILURE,
   payload: error
 });

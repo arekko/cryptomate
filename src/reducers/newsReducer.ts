@@ -1,38 +1,39 @@
-import {
-  FETCH_NEWS_FAILURE,
-  FETCH_NEWS_REQUEST,
-  FETCH_NEWS_SUCCESS
-} from "./../constants/actionTypes";
-const initialState = {
+import { NewsActionTypes, NewsState } from "../constants/reduxTypes";
+import { createReducer, updateObject } from "./reducerUtilities";
+
+const initialState: NewsState = {
   news: [],
   loading: false,
   error: null
 };
 
-export default (state = initialState, action: any) => {
-  const { type, payload } = action;
+const fetchNewsRequest = (state: NewsState) =>
+  updateObject(state, {
+    loading: true,
+    error: null
+  });
 
-  switch (type) {
-    case FETCH_NEWS_SUCCESS:
-      return {
-        news: payload,
-        loading: false,
-        error: null
-      };
-    case FETCH_NEWS_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
-    case FETCH_NEWS_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: payload
-      };
+const fetchNewsSuccess = (
+  state: NewsActionTypes,
+  { payload }: NewsActionTypes
+) =>
+  updateObject(state, {
+    news: payload,
+    loading: false,
+    error: null
+  });
 
-    default:
-      return state;
-  }
-};
+const fetchNewsFailure = (
+  state: NewsActionTypes,
+  { payload }: NewsActionTypes
+) =>
+  updateObject(state, {
+    loading: false,
+    error: payload
+  });
+
+export default createReducer(initialState, {
+  FETCH_NEWS_REQUEST: fetchNewsRequest,
+  FETCH_NEWS_SUCCESS: fetchNewsSuccess,
+  FETCH_NEWS_FAILURE: fetchNewsFailure
+});

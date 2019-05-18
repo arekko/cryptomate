@@ -1,10 +1,9 @@
-import { CryptoApiService } from "../services";
 import {
   FETCH_CRYPTO_FAILURE,
   FETCH_CRYPTO_REQUEST,
   FETCH_CRYPTO_SUCCESS
-} from "./../constants/actionTypes";
-
+} from "../constants/reduxTypes";
+import { CryptoApiService } from "../services";
 export const cryptoRequested = () => ({ type: FETCH_CRYPTO_REQUEST });
 
 export const cryptoLoaded = (data: any) => ({

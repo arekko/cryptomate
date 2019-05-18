@@ -41,7 +41,9 @@ export const CryptoCard: React.FC<ICryptoCardProps> = ({ item }) => {
             }}
             style={styles.img}
           />
-          <Text style={styles.title}>{item.CoinInfo.FullName}</Text>
+          <Text numberOfLines={2} style={styles.title}>
+            {item.CoinInfo.FullName}
+          </Text>
         </View>
         <View style={{ flexDirection: "column" }}>
           <Text style={styles.price}>{item.DISPLAY.USD.PRICE}</Text>
@@ -66,7 +68,8 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    width: '50%'
   },
   img: { width: 30, height: 30, borderRadius: 50 },
   title: {

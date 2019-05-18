@@ -32,6 +32,9 @@ const N: React.FC<INewsProps> = ({ news, loading, fetchNews }) => {
 
   const data = news.filter((item: any) => item.urlToImage);
 
+  console.log(news);
+  console.log(loading);
+
   const renderNews = () => {
     return (
       <View style={styles.newsContainer}>
@@ -51,7 +54,7 @@ const N: React.FC<INewsProps> = ({ news, loading, fetchNews }) => {
   );
 };
 
-const mapStateToProps = ({news}: any) => ({
+const mapStateToProps = ({ news }: any) => ({
   news: news.news,
   loading: news.loading
 });

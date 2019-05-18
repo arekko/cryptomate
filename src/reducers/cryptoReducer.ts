@@ -1,13 +1,4 @@
-import {
-  FETCH_CRYPTO_FAILURE,
-  FETCH_CRYPTO_REQUEST,
-  FETCH_CRYPTO_SUCCESS
-} from "./../constants/actionTypes";
-
-const updateObject = (oldValue: object, newValue: object) => ({
-  ...oldValue,
-  ...newValue
-});
+import { createReducer, updateObject } from "./reducerUtilities";
 
 const initialState = {
   crypto: [],
@@ -15,28 +6,27 @@ const initialState = {
   error: null
 };
 
-export default (state = initialState, action: any) => {
-  const { type, payload } = action;
+const fetchCryptoRequest = (state: any) =>
+  updateObject(state, {
+    loading: true,
+    error: null
+  });
 
-  switch (type) {
-    case FETCH_CRYPTO_SUCCESS:
-      return updateObject(state, {
-        crypto: payload,
-        loading: false,
-        error: null
-      });
-    case FETCH_CRYPTO_REQUEST:
-      return updateObject(state, {
-        loading: true,
-        error: null
-      });
-    case FETCH_CRYPTO_FAILURE:
-      return updateObject(state, {
-        loading: false,
-        error: payload
-      });
+const fetchCryptoSuccess = (state: any, { payload }: any) =>
+  updateObject(state, {
+    crypto: payload,
+    loading: false,
+    error: null
+  });
 
-    default:
-      return state;
-  }
-};
+const fetchCryptoFailure = (state: any, { payload }: any) =>
+  updateObject(state, {
+    loading: false,
+    error: payload
+  });
+
+export default createReducer(initialState, {
+  FETCH_CRYPTO_REQUEST: fetchCryptoRequest,
+  FETCH_CRYPTO_SUCCESS: fetchCryptoSuccess,
+  FETCH_CRYPTO_FAILURE: fetchCryptoFailure
+});

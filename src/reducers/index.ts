@@ -6,3 +6,5 @@ export const rootReducer = combineReducers({
   news: newsReducer,
   crypto: cryptoReducer
 });
+
+export type AppState = typeof rootReducer;
